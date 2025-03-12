@@ -1,0 +1,112 @@
+{
+    "extensionName": {
+      "message": "PreCache Predictor",
+      "description": "Name of the extension."
+    },
+    "extensionDescription": {
+      "message": "Uses machine learning to predict your browsing patterns and pre-cache upcoming pages to speed up browsing.",
+      "description": "Description of the extension."
+    },
+    "popupStatusActive": {
+      "message": "Status: Active",
+      "description": "Status shown when the extension is active."
+    },
+    "popupStatusInactive": {
+      "message": "Status: Inactive",
+      "description": "Status shown when the extension is inactive."
+    },
+    "popupToggleOn": {
+      "message": "On",
+      "description": "Toggle switch in on position."
+    },
+    "popupToggleOff": {
+      "message": "Off",
+      "description": "Toggle switch in off position."
+    },
+    "popupStatsHeader": {
+      "message": "Lifetime Statistics:",
+      "description": "Header for statistics section."
+    },
+    "popupStatsTotalTime": {
+      "message": "Total time saved: $TIME$",
+      "description": "Total time saved by prefetching.",
+      "placeholders": {
+        "TIME": {
+          "content": "$1",
+          "example": "35m 42s"
+        }
+      }
+    },
+    "popupStatsPrefetchedPages": {
+      "message": "Prefetched pages: $COUNT$",
+      "description": "Number of prefetched pages.",
+      "placeholders": {
+        "COUNT": {
+          "content": "$1",
+          "example": "412"
+        }
+      }
+    },
+    "popupStatsHitRate": {
+      "message": "Hit rate: $RATE$%",
+      "description": "Percentage of successful prefetches.",
+      "placeholders": {
+        "RATE": {
+          "content": "$1",
+          "example": "73"
+        }
+      }
+    },
+    "popupSettingsButton": {
+      "message": "Advanced Settings",
+      "description": "Button to open settings page."
+    },
+    "optionsTitle": {
+      "message": "PreCache Predictor Settings",
+      "description": "Title of the options page."
+    },
+    "optionsPrefetchLevel": {
+      "message": "Prefetch Aggressiveness",
+      "description": "Setting for prefetch aggressiveness level."
+    },
+    "optionsLevelLow": {
+      "message": "Low",
+      "description": "Low level of prefetch aggressiveness."
+    },
+    "optionsLevelMedium": {
+      "message": "Medium",
+      "description": "Medium level of prefetch aggressiveness."
+    },
+    "optionsLevelHigh": {
+      "message": "High",
+      "description": "High level of prefetch aggressiveness."
+    },
+    "optionsBatteryMode": {
+      "message": "Battery Saving Mode",
+      "description": "Setting for behavior when on battery power."
+    },
+    "optionsDataSaver": {
+      "message": "Data Saver Mode",
+      "description": "Setting for reducing data usage."
+    },
+    "optionsPrivacy": {
+      "message": "Privacy Settings",
+      "description": "Setting for privacy options."
+    },
+    "optionsSaveButton": {
+      "message": "Save",
+      "description": "Button to save settings."
+    },
+    "optionsResetButton": {
+      "message": "Reset to Defaults",
+      "description": "Button to reset settings to defaults."
+    },
+    "optionsWhitelist": {
+      "message": "Site Whitelist",
+      "description": "List of sites where prefetching is allowed."
+    },
+    "optionsBlacklist": {
+      "message": "Site Blacklist",
+      "description": "List of sites where prefetching is disabled."
+    }
+}

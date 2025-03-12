@@ -1,0 +1,112 @@
+{
+    "extensionName": {
+        "message": "PreCache Predictor",
+        "description": "拡張機能の名前"
+    },
+    "extensionDescription": {
+        "message": "機械学習を使用してユーザーの閲覧パターンを予測し、次のページを事前にキャッシュしてブラウジング速度を向上させます。",
+        "description": "拡張機能の説明"
+    },
+    "popupStatusActive": {
+        "message": "状態: アクティブ",
+        "description": "拡張機能がアクティブな時に表示される状態"
+    },
+    "popupStatusInactive": {
+        "message": "状態: 非アクティブ",
+        "description": "拡張機能が非アクティブな時に表示される状態"
+    },
+    "popupToggleOn": {
+        "message": "オン",
+        "description": "オン位置のトグルスイッチ"
+    },
+    "popupToggleOff": {
+        "message": "オフ",
+            "description": "オフ位置のトグルスイッチ"
+    },
+    "popupStatsHeader": {
+        "message": "全期間の統計:",
+        "description": "統計セクションのヘッダー"
+    },
+    "popupStatsTotalTime": {
+        "message": "総節約時間: $TIME$",
+        "description": "プリフェッチによって節約された総時間",
+        "placeholders": {
+            "TIME": {
+                "content": "$1",
+                "example": "35分42秒"
+            }
+        }
+    },
+    "popupStatsPrefetchedPages": {
+        "message": "プリフェッチページ: $COUNT$",
+        "description": "プリフェッチされたページ数",
+        "placeholders": {
+            "COUNT": {
+            "content": "$1",
+            "example": "412"
+            }
+        }
+    },
+    "popupStatsHitRate": {
+        "message": "ヒット率: $RATE$%",
+        "description": "成功したプリフェッチの割合",
+        "placeholders": {
+            "RATE": {
+            "content": "$1",
+            "example": "73"
+            }
+        }
+    },
+    "popupSettingsButton": {
+        "message": "詳細設定",
+        "description": "設定ページを開くボタン"
+    },
+    "optionsTitle": {
+        "message": "PreCache Predictor 設定",
+        "description": "オプションページのタイトル"
+    },
+    "optionsPrefetchLevel": {
+        "message": "プリフェッチの積極性",
+        "description": "プリフェッチの積極性レベルの設定"
+    },
+    "optionsLevelLow": {
+        "message": "低",
+        "description": "プリフェッチの積極性の低レベル"
+    },
+    "optionsLevelMedium": {
+        "message": "中",
+        "description": "プリフェッチの積極性の中レベル"
+    },
+    "optionsLevelHigh": {
+        "message": "高",
+        "description": "プリフェッチの積極性の高レベル"
+    },
+    "optionsBatteryMode": {
+        "message": "バッテリー節約モード",
+        "description": "バッテリー駆動時の動作設定"
+    },
+    "optionsDataSaver": {
+        "message": "データセーバーモード",
+        "description": "データ使用量を削減する設定"
+    },
+    "optionsPrivacy": {
+        "message": "プライバシー設定",
+        "description": "プライバシーオプションの設定"
+    },
+    "optionsSaveButton": {
+        "message": "保存",
+        "description": "設定を保存するボタン"
+    },
+    "optionsResetButton": {
+        "message": "初期設定に戻す",
+        "description": "設定をデフォルトにリセットするボタン"
+    },
+    "optionsWhitelist": {
+        "message": "サイトホワイトリスト",
+        "description": "プリフェッチが許可されているサイトのリスト"
+    },
+    "optionsBlacklist": {
+        "message": "サイトブラックリスト",
+        "description": "プリフェッチが無効になっているサイトのリスト"
+    }
+}

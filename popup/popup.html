@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="popup.css">
+        <title>PreCache Predictor</title>
+    </head>
+    <body>
+        <div class="popup-container">
+            <header class="popup-header">
+                <h1>PreCache Predictor</h1>
+            </header>
+
+            <div class="status-section">
+            <div class="status-label" id="status-text" data-i18n="popupStatusActive"></div>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggle-active" checked>
+                <span class="slider round"></span>
+                <span class="toggle-label-on" data-i18n="popupToggleOn"></span>
+                <span class="toggle-label-off" data-i18n="popupToggleOff"></span>
+            </label>
+        </div>
+
+        <div class="stats-section">
+        <h2 data-i18n="popupStatsHeader"></h2>
+        <ul class="stats-list">
+            <li>
+            <span class="stats-icon">⏱️</span>
+            <span id="total-time-saved" data-i18n="popupStatsTotalTime" data-i18n-args="0分0秒"></span>
+            </li>
+            <li>
+            <span class="stats-icon">📄</span>
+            <span id="prefetched-pages" data-i18n="popupStatsPrefetchedPages" data-i18n-args="0"></span>
+            </li>
+            <li>
+            <span class="stats-icon">🎯</span>
+            <span id="hit-rate" data-i18n="popupStatsHitRate" data-i18n-args="0"></span>
+            </li>
+        </ul>
+        </div>
+
+            <div class="settings-section">
+            <button id="open-settings" class="settings-button" data-i18n="popupSettingsButton"></button>
+            </div>
+        </div>
+
+        <script src="popup.js"></script>
+    </body>
+</html>
