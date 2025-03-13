@@ -111,7 +111,6 @@ async function saveStats() {
 			visitedUrls: JSON.stringify([...stats.visitedUrls]),
 			navigationPatterns: JSON.stringify([...stats.navigationPatterns]),
 		};
-
 		await browserAPI.storage.local.set({ stats: serializableStats });
 	} catch (error) {
 		console.error("統計データの保存中にエラーが発生しました:", error);
@@ -199,7 +198,7 @@ function recordNavigation(fromUrl, toUrl) {
 	if (!stats.navigationPatterns.has(normFromUrl)) {
 		stats.navigationPatterns.set(normFromUrl, new Map([[normToUrl, 1]]));
 	} else {
-		const destinations = stats.navigationPatterns.get(normFromUrl);
+		const destinations = stats.navigationPatterns; //.get(normFromUrl);
 		if (!destinations.has(normToUrl)) {
 			destinations.set(normToUrl, 1);
 		} else {
@@ -222,9 +221,15 @@ function predictNextUrls(currentUrl) {
 	};
 
 	const normCurrentUrl = normalizeUrl(currentUrl);
+	const destinations = stats.navigationPatterns; //.get(normCurrentUrl);
 
-	const destinations = stats.navigationPatterns.get(normCurrentUrl);
 	if (!destinations || destinations.size === 0) {
+		return [];
+	}
+
+	// destinationsがMapであることを確認
+	if (!(destinations instanceof Map)) {
+		console.error("destinations is not a Map:", destinations);
 		return [];
 	}
 
@@ -246,7 +251,6 @@ function predictNextUrls(currentUrl) {
 			break;
 	}
 
-	// 上位N個のURLを返す
 	return sortedDestinations.slice(0, maxPredictions).map(([url, count]) => ({
 		url,
 		weight: count / [...destinations.values()].reduce((a, b) => a + b, 0),
