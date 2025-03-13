@@ -198,7 +198,7 @@ function recordNavigation(fromUrl, toUrl) {
 	if (!stats.navigationPatterns.has(normFromUrl)) {
 		stats.navigationPatterns.set(normFromUrl, new Map([[normToUrl, 1]]));
 	} else {
-		const destinations = stats.navigationPatterns; //.get(normFromUrl);
+		const destinations = stats.navigationPatterns.get(normFromUrl);
 		if (!destinations.has(normToUrl)) {
 			destinations.set(normToUrl, 1);
 		} else {
@@ -240,14 +240,14 @@ function predictNextUrls(currentUrl) {
 	let maxPredictions;
 	switch (config.prefetchLevel) {
 		case "low":
-			maxPredictions = 1;
+			maxPredictions = 10;
 			break;
 		case "high":
-			maxPredictions = 5;
+			maxPredictions = 100;
 			break;
 		case "medium":
 		default:
-			maxPredictions = 3;
+			maxPredictions = 50;
 			break;
 	}
 
