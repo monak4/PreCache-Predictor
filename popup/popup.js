@@ -48,6 +48,7 @@ async function loadPreferences() {
 }
 
 async function loadStatistics() {
+	console.log("読み込んでいます。。。");
 	try {
 		const stats = await browserAPI.storage.local.get({
 			totalTimeSaved: 0, // ミリ秒単位
