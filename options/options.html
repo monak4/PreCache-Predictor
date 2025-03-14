@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="options.css" />
+		<title>PreCache Predictor - Settings</title>
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+				<h1 data-i18n="optionsTitle">PreCache Predictor Settings</h1>
+				<p class="description" data-i18n="optionsDescription">
+					Configure how PreCache Predictor works to optimize your
+					browsing experience.
+				</p>
+			</header>
+
+			<section class="settings-section">
+				<h2 data-i18n="optionsGeneral">General Settings</h2>
+
+				<div class="setting-item">
+					<div class="setting-label">
+						<label
+							for="prefetch-level"
+							data-i18n="optionsPrefetchLevel"
+							>Prefetch Level</label
+						>
+						<p
+							class="setting-description"
+							data-i18n="optionsPrefetchLevelDesc"
+						>
+							Determine how aggressively pages should be
+							prefetched
+						</p>
+					</div>
+					<div class="setting-control">
+						<select id="prefetch-level" class="select-input">
+							<option value="low" data-i18n="optionsPrefetchLow">
+								Low
+							</option>
+							<option
+								value="medium"
+								data-i18n="optionsPrefetchMedium"
+							>
+								Medium
+							</option>
+							<option
+								value="high"
+								data-i18n="optionsPrefetchHigh"
+							>
+								High
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="setting-item">
+					<div class="setting-label">
+						<label
+							for="battery-saving"
+							data-i18n="optionsBatterySaving"
+							>Battery Saving Mode</label
+						>
+						<p
+							class="setting-description"
+							data-i18n="optionsBatterySavingDesc"
+						>
+							Limit prefetching when battery is low (below 30%)
+						</p>
+					</div>
+					<div class="setting-control">
+						<label class="toggle-switch">
+							<input type="checkbox" id="battery-saving" />
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="setting-item">
+					<div class="setting-label">
+						<label for="data-saver" data-i18n="optionsDataSaver"
+							>Data Saver</label
+						>
+						<p
+							class="setting-description"
+							data-i18n="optionsDataSaverDesc"
+						>
+							Limit prefetching on cellular networks
+						</p>
+					</div>
+					<div class="setting-control">
+						<label class="toggle-switch">
+							<input type="checkbox" id="data-saver" />
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+			</section>
+
+			<section class="settings-section">
+				<h2 data-i18n="optionsUrlFilters">URL Filters</h2>
+
+				<div class="setting-group">
+					<div class="setting-label">
+						<label for="whitelist" data-i18n="optionsWhitelist"
+							>Whitelist</label
+						>
+						<p
+							class="setting-description"
+							data-i18n="optionsWhitelistDesc"
+						>
+							Only prefetch pages from these domains (leave empty
+							to prefetch all domains)
+						</p>
+					</div>
+					<div class="url-list-control">
+						<textarea
+							id="whitelist"
+							placeholder="example.com, anothersite.com"
+						></textarea>
+						<p
+							class="input-description"
+							data-i18n="optionsDomainsHint"
+						>
+							Enter domain names separated by commas
+						</p>
+					</div>
+				</div>
+
+				<div class="setting-group">
+					<div class="setting-label">
+						<label for="blacklist" data-i18n="optionsBlacklist"
+							>Blacklist</label
+						>
+						<p
+							class="setting-description"
+							data-i18n="optionsBlacklistDesc"
+						>
+							Never prefetch pages from these domains
+						</p>
+					</div>
+					<div class="url-list-control">
+						<textarea
+							id="blacklist"
+							placeholder="example.com, anothersite.com"
+						></textarea>
+						<p
+							class="input-description"
+							data-i18n="optionsDomainsHint"
+						>
+							Enter domain names separated by commas
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="settings-section">
+				<h2 data-i18n="optionsStatistics">Statistics</h2>
+
+				<div class="stats-container">
+					<div class="stats-item">
+						<div
+							class="stats-label"
+							data-i18n="optionsStatsTotalTime"
+						>
+							Total Time Saved
+						</div>
+						<div class="stats-value" id="total-time-saved">
+							0 seconds
+						</div>
+					</div>
+					<div class="stats-item">
+						<div
+							class="stats-label"
+							data-i18n="optionsStatsPrefetchedPages"
+						>
+							Prefetched Pages
+						</div>
+						<div class="stats-value" id="prefetched-pages">0</div>
+					</div>
+					<div class="stats-item">
+						<div
+							class="stats-label"
+							data-i18n="optionsStatsSuccessfulPrefetches"
+						>
+							Successful Prefetches
+						</div>
+						<div class="stats-value" id="successful-prefetches">
+							0
+						</div>
+					</div>
+					<div class="stats-item">
+						<div
+							class="stats-label"
+							data-i18n="optionsStatsHitRate"
+						>
+							Success Rate
+						</div>
+						<div class="stats-value" id="hit-rate">0%</div>
+					</div>
+				</div>
+
+				<div class="stats-actions">
+					<button
+						id="reset-stats"
+						class="button danger-button"
+						data-i18n="optionsResetStats"
+					>
+						Reset Statistics
+					</button>
+				</div>
+			</section>
+
+			<section class="settings-section">
+				<h2 data-i18n="optionsAdvanced">Advanced Settings</h2>
+
+				<div class="setting-group">
+					<div class="setting-label">
+						<label data-i18n="optionsDataExport"
+							>Data Management</label
+						>
+						<p
+							class="setting-description"
+							data-i18n="optionsDataExportDesc"
+						>
+							Export or import your settings and data
+						</p>
+					</div>
+					<div class="data-management-controls">
+						<button
+							id="export-data"
+							class="button"
+							data-i18n="optionsExportData"
+						>
+							Export Data
+						</button>
+						<button
+							id="import-data"
+							class="button"
+							data-i18n="optionsImportData"
+						>
+							Import Data
+						</button>
+						<input
+							type="file"
+							id="import-file"
+							accept=".json"
+							style="display: none"
+						/>
+					</div>
+				</div>
+
+				<div class="setting-group">
+					<div class="setting-label">
+						<label data-i18n="optionsResetAll">Reset All</label>
+						<p
+							class="setting-description"
+							data-i18n="optionsResetAllDesc"
+						>
+							Reset all settings and data to default values
+						</p>
+					</div>
+					<div class="reset-controls">
+						<button
+							id="reset-all"
+							class="button danger-button"
+							data-i18n="optionsResetAllButton"
+						>
+							Reset All
+						</button>
+					</div>
+				</div>
+			</section>
+
+			<div class="actions">
+				<div class="status-message" id="status-message"></div>
+				<button
+					id="save-settings"
+					class="button primary-button"
+					data-i18n="optionsSave"
+				>
+					Save Settings
+				</button>
+			</div>
+		</div>
+
+		<script src="options.js"></script>
+	</body>
+</html>
