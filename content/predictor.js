@@ -432,4 +432,450 @@ function analyzePredictedUrls() {
 
 	pageAnalysisState.links.forEach((linkData, url) => {
 		try {
-		// リンクが存在しない、または無効な場合は
+			// リンクが存在しない、または無効な場合はスキップ
+			if (
+				!linkData.element ||
+				!document.body.contains(linkData.element)
+			) {
+				return;
+			}
+
+			// 基本スコアの計算
+			let score = 0;
+
+			// 1. 可視性に基づくスコア
+			if (linkData.isVisible) {
+				score += ANALYSIS_CONFIG.analyzePriorityFactor.visibility;
+
+				// 画面中央に近いリンクにはボーナス
+				const centerDistanceY = Math.abs(linkData.position.y - 0.5);
+				if (centerDistanceY < 0.3) {
+					// 中央付近の要素にはボーナス
+					score +=
+						(0.3 - centerDistanceY) *
+						ANALYSIS_CONFIG.analyzePriorityFactor.position;
+				}
+			}
+
+			// 2. サイズに基づくスコア（大きなリンクは重要である可能性が高い）
+			const viewportArea = window.innerWidth * window.innerHeight;
+			const relativeSize = linkData.size.area / viewportArea;
+			if (relativeSize > 0.005) {
+				// 画面の0.5%以上を占めるリンク
+				score +=
+					Math.min(relativeSize * 10, 0.1) *
+					ANALYSIS_CONFIG.analyzePriorityFactor.relativeSize;
+			}
+
+			// 3. ユーザーインタラクションに基づくスコア
+			// クリック履歴
+			if (linkData.clickCount > 0) {
+				score +=
+					Math.min(linkData.clickCount * 0.5, 1) *
+					ANALYSIS_CONFIG.analyzePriorityFactor.clicks;
+			}
+
+			// ホバー履歴
+			if (linkData.hoverCount > 0) {
+				score +=
+					Math.min(linkData.hoverCount * 0.3, 1) *
+					ANALYSIS_CONFIG.analyzePriorityFactor.hovers;
+			}
+
+			// 4. リンクのテキスト内容に基づく分析
+			const linkText = linkData.element.textContent.trim();
+			if (linkText) {
+				// 特定のキーワードに基づく重み付け
+				const importantKeywords = [
+					"次へ",
+					"続き",
+					"詳細",
+					"もっと見る",
+					"読む",
+					"表示",
+					"next",
+					"more",
+					"continue",
+					"read",
+					"view",
+					"details",
+				];
+
+				for (const keyword of importantKeywords) {
+					if (
+						linkText.toLowerCase().includes(keyword.toLowerCase())
+					) {
+						score += 0.15;
+						break;
+					}
+				}
+			}
+
+			// ページ内セマンティクス分析
+			// 階層構造での重要性（見出し近くのリンクはより重要）
+			const isNearHeading = !!linkData.element.closest(
+				"h1, h2, h3, h4, h5, h6, header, .header, .title"
+			);
+			if (isNearHeading) {
+				score += 0.15;
+			}
+
+			// 親コンテナの重要性
+			const isInMainContent = !!linkData.element.closest(
+				"main, article, .content, .main, #content, #main"
+			);
+			if (isInMainContent) {
+				score += 0.1;
+			}
+
+			// スコアとURLを記録
+			scoredLinks.push({
+				url,
+				score,
+				linkData,
+			});
+		} catch (error) {
+			console.error(
+				`リンクの分析中にエラーが発生しました (${url}):`,
+				error
+			);
+		}
+	});
+
+	// URLをスコアで降順ソート
+	scoredLinks.sort((a, b) => b.score - a.score);
+
+	// 最上位の予測を返す
+	return scoredLinks
+		.slice(0, ANALYSIS_CONFIG.maxLinksToReport)
+		.map((item) => ({
+			url: item.url,
+			weight: item.score,
+			isVisible: item.linkData.isVisible,
+			interacted:
+				item.linkData.clickCount > 0 || item.linkData.hoverCount > 0,
+		}));
+}
+
+// ページを離れる際のクリーンアップ
+function cleanupPageAnalysis() {
+	// MutationObserverのクリーンアップ
+	if (pageAnalysisState.domObserver) {
+		pageAnalysisState.domObserver.disconnect();
+		pageAnalysisState.domObserver = null;
+	}
+
+	// イベントリスナーの削除（明示的に登録された場合）
+	// 注: 通常、ページ遷移時には自動的にクリーンアップされるが、念のため
+
+	// その他のリソースのクリーンアップ
+	hoverTimers.forEach((timerId) => clearTimeout(timerId));
+	hoverTimers.clear();
+
+	// 状態のリセット
+	pageAnalysisState.links.clear();
+}
+
+// ページ内のセマンティクス分析
+function analyzePageSemantics() {
+	// ページのタイトル
+	const pageTitle = document.title;
+
+	// メタディスクリプション
+	const metaDescription =
+		document.querySelector('meta[name="description"]')?.content || "";
+
+	// 見出し要素
+	const headings = Array.from(document.querySelectorAll("h1, h2, h3")).map(
+		(h) => h.textContent.trim()
+	);
+
+	// キーワード頻度分析
+	const mainContent =
+		document.querySelector("main, article, #content, .content") ||
+		document.body;
+	const textContent = mainContent.textContent.toLowerCase();
+
+	// シンプルな単語頻度分析
+	const words = textContent.split(/\s+/).filter((word) => word.length > 3);
+	const wordFrequency = {};
+
+	words.forEach((word) => {
+		if (!wordFrequency[word]) {
+			wordFrequency[word] = 1;
+		} else {
+			wordFrequency[word]++;
+		}
+	});
+
+	// 最も頻度の高い単語
+	const topKeywords = Object.entries(wordFrequency)
+		.sort((a, b) => b[1] - a[1])
+		.slice(0, 10)
+		.map(([word]) => word);
+
+	return {
+		title: pageTitle,
+		description: metaDescription,
+		headings: headings.slice(0, 5), // 最初の5つの見出しのみ
+		keywords: topKeywords,
+	};
+}
+
+// ページコンテキストをバックグラウンドに送信
+function sendPageContextToBackground() {
+	const semantics = analyzePageSemantics();
+
+	browserAPI.runtime.sendMessage({
+		action: "pageContext",
+		currentUrl: window.location.href,
+		context: {
+			title: semantics.title,
+			description: semantics.description,
+			keywords: semantics.keywords,
+			headings: semantics.headings,
+		},
+	});
+}
+
+// URLのカテゴリを推測
+function categorizeUrl(url) {
+	try {
+		const urlObj = new URL(url);
+		const path = urlObj.pathname;
+
+		// パスが短すぎる場合はスキップ
+		if (path.length <= 1) {
+			return "home";
+		}
+
+		// カテゴリを推測する単純なヒューリスティック
+		if (
+			path.includes("/blog/") ||
+			path.includes("/news/") ||
+			path.includes("/article/")
+		) {
+			return "article";
+		}
+
+		if (
+			path.includes("/product/") ||
+			path.includes("/item/") ||
+			path.match(/\/p\/\d+/)
+		) {
+			return "product";
+		}
+
+		if (path.includes("/category/") || path.includes("/tag/")) {
+			return "category";
+		}
+
+		if (path.includes("/search")) {
+			return "search";
+		}
+
+		if (
+			path.includes("/account") ||
+			path.includes("/profile") ||
+			path.includes("/user")
+		) {
+			return "account";
+		}
+
+		// URLパターンの正規表現チェック
+		if (path.match(/\/\d{4}\/\d{2}\/\d{2}\//)) {
+			return "article"; // 日付形式の記事URL
+		}
+
+		if (path.match(/\/[a-z0-9-]+\/[a-z0-9-]+$/)) {
+			// カテゴリ/スラッグ形式のURLの場合、記事である可能性が高い
+			return "article";
+		}
+
+		return "other";
+	} catch (error) {
+		console.error("URL分類中にエラーが発生しました:", error);
+		return "unknown";
+	}
+}
+
+// メッセージリスナーの設定
+browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
+	if (message.action === "requestPageAnalysis") {
+		// バックグラウンドが分析を要求
+		const predictions = analyzePredictedUrls();
+		const semantics = analyzePageSemantics();
+
+		sendResponse({
+			predictions,
+			context: {
+				title: semantics.title,
+				description: semantics.description,
+				keywords: semantics.keywords,
+			},
+		});
+	}
+
+	// 応答が非同期の場合は、trueを返す
+	return true;
+});
+
+// ページ内のプリフェッチヒント（<link rel="prefetch">）を検出して報告
+function detectExistingPrefetchHints() {
+	const prefetchLinks = document.querySelectorAll(
+		'link[rel="prefetch"], link[rel="prerender"]'
+	);
+
+	if (prefetchLinks.length > 0) {
+		const hints = Array.from(prefetchLinks).map((link) => link.href);
+
+		// 既存のヒントをバックグラウンドに報告
+		browserAPI.runtime.sendMessage({
+			action: "existingPrefetchHints",
+			currentUrl: window.location.href,
+			hints,
+		});
+	}
+}
+
+// インターセクションオブザーバーを使用して、可視領域に入ったリンクを追跡
+function setupVisibilityObserver() {
+	// サポートされていない環境ではスキップ
+	if (!("IntersectionObserver" in window)) {
+		return;
+	}
+
+	const visibilityObserver = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				const link = entry.target;
+				if (!link.href) return;
+
+				if (pageAnalysisState.links.has(link.href)) {
+					const linkData = pageAnalysisState.links.get(link.href);
+					linkData.isVisible = entry.isIntersecting;
+
+					// 可視状態が変わったとき（特に可視になったとき）
+					if (entry.isIntersecting) {
+						linkData.visibleSince = Date.now();
+					} else if (linkData.visibleSince) {
+						linkData.totalVisibleTime =
+							(linkData.totalVisibleTime || 0) +
+							(Date.now() - linkData.visibleSince);
+						linkData.visibleSince = null;
+					}
+
+					pageAnalysisState.links.set(link.href, linkData);
+				}
+			});
+		},
+		{
+			threshold: [0, 0.5, 1.0],
+			rootMargin: "0px",
+		}
+	);
+
+	// すべてのリンクを監視
+	document.querySelectorAll("a[href]").forEach((link) => {
+		if (
+			link.href &&
+			!link.href.startsWith("javascript:") &&
+			!link.href.startsWith("#")
+		) {
+			visibilityObserver.observe(link);
+		}
+	});
+
+	// 後でクリーンアップできるように保存
+	pageAnalysisState.visibilityObserver = visibilityObserver;
+}
+
+// ページ訪問のコンテキストに基づく分析
+function analyzePageContext() {
+	// 現在のURLを分析
+	const currentUrl = window.location.href;
+	const urlCategory = categorizeUrl(currentUrl);
+
+	// リファラー情報の分析
+	const referrer = document.referrer;
+	let referrerCategory = "direct";
+
+	if (referrer) {
+		try {
+			const referrerUrl = new URL(referrer);
+			const currentUrl = new URL(window.location.href);
+
+			// 同じドメインからの訪問
+			if (referrerUrl.hostname === currentUrl.hostname) {
+				referrerCategory = "internal";
+				// 内部参照元のカテゴリを取得
+				const internalCategory = categorizeUrl(referrer);
+
+				// ナビゲーションパターンの分析
+				// 例: カテゴリーページから商品ページへ、など
+				if (
+					internalCategory === "category" &&
+					urlCategory === "product"
+				) {
+					// カテゴリからの商品閲覧
+					browserAPI.runtime.sendMessage({
+						action: "navigationPattern",
+						pattern: "category_to_product",
+						fromUrl: referrer,
+						toUrl: currentUrl.href,
+					});
+				} else if (
+					internalCategory === "search" &&
+					urlCategory === "product"
+				) {
+					// 検索結果からの商品閲覧
+					browserAPI.runtime.sendMessage({
+						action: "navigationPattern",
+						pattern: "search_to_product",
+						fromUrl: referrer,
+						toUrl: currentUrl.href,
+					});
+				}
+			} else {
+				referrerCategory = "external";
+
+				// 主要なソースを検出
+				const hostname = referrerUrl.hostname;
+				if (hostname.includes("google")) {
+					referrerCategory = "search";
+				} else if (
+					hostname.includes("facebook") ||
+					hostname.includes("twitter") ||
+					hostname.includes("instagram") ||
+					hostname.includes("linkedin")
+				) {
+					referrerCategory = "social";
+				}
+			}
+		} catch (error) {
+			console.error("リファラー分析中にエラーが発生しました:", error);
+		}
+	}
+
+	// ページコンテキストをバックグラウンドに送信
+	browserAPI.runtime.sendMessage({
+		action: "visitContext",
+		currentUrl: window.location.href,
+		context: {
+			category: urlCategory,
+			referrer: referrer || "none",
+			referrerCategory: referrerCategory,
+			timestamp: Date.now(),
+		},
+	});
+}
+
+// 初期化
+initializePageAnalysis();
+setTimeout(detectExistingPrefetchHints, 1000);
+setTimeout(sendPageContextToBackground, 2000);
+setTimeout(analyzePageContext, 2500);
+setTimeout(setupVisibilityObserver, 3000);
+
+// コンソールメッセージ
+console.log("PreCache Predictor - Content Script が初期化されました");
