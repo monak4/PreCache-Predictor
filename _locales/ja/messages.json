@@ -1,112 +1,224 @@
 {
-    "extensionName": {
-        "message": "PreCache Predictor",
-        "description": "拡張機能の名前"
-    },
-    "extensionDescription": {
-        "message": "機械学習を使用してユーザーの閲覧パターンを予測し、次のページを事前にキャッシュしてブラウジング速度を向上させます。",
-        "description": "拡張機能の説明"
-    },
-    "popupStatusActive": {
-        "message": "状態: アクティブ",
-        "description": "拡張機能がアクティブな時に表示される状態"
-    },
-    "popupStatusInactive": {
-        "message": "状態: 非アクティブ",
-        "description": "拡張機能が非アクティブな時に表示される状態"
-    },
-    "popupToggleOn": {
-        "message": "オン",
-        "description": "オン位置のトグルスイッチ"
-    },
-    "popupToggleOff": {
-        "message": "オフ",
-            "description": "オフ位置のトグルスイッチ"
-    },
-    "popupStatsHeader": {
-        "message": "全期間の統計:",
-        "description": "統計セクションのヘッダー"
-    },
-    "popupStatsTotalTime": {
-        "message": "総節約時間: $TIME$",
-        "description": "プリフェッチによって節約された総時間",
-        "placeholders": {
-            "TIME": {
-                "content": "$1",
-                "example": "35分42秒"
-            }
-        }
-    },
-    "popupStatsPrefetchedPages": {
-        "message": "プリフェッチページ: $COUNT$",
-        "description": "プリフェッチされたページ数",
-        "placeholders": {
-            "COUNT": {
-            "content": "$1",
-            "example": "412"
-            }
-        }
-    },
-    "popupStatsHitRate": {
-        "message": "ヒット率: $RATE$%",
-        "description": "成功したプリフェッチの割合",
-        "placeholders": {
-            "RATE": {
-            "content": "$1",
-            "example": "73"
-            }
-        }
-    },
-    "popupSettingsButton": {
-        "message": "詳細設定",
-        "description": "設定ページを開くボタン"
-    },
-    "optionsTitle": {
-        "message": "PreCache Predictor 設定",
-        "description": "オプションページのタイトル"
-    },
-    "optionsPrefetchLevel": {
-        "message": "プリフェッチの積極性",
-        "description": "プリフェッチの積極性レベルの設定"
-    },
-    "optionsLevelLow": {
-        "message": "低",
-        "description": "プリフェッチの積極性の低レベル"
-    },
-    "optionsLevelMedium": {
-        "message": "中",
-        "description": "プリフェッチの積極性の中レベル"
-    },
-    "optionsLevelHigh": {
-        "message": "高",
-        "description": "プリフェッチの積極性の高レベル"
-    },
-    "optionsBatteryMode": {
-        "message": "バッテリー節約モード",
-        "description": "バッテリー駆動時の動作設定"
-    },
-    "optionsDataSaver": {
-        "message": "データセーバーモード",
-        "description": "データ使用量を削減する設定"
-    },
-    "optionsPrivacy": {
-        "message": "プライバシー設定",
-        "description": "プライバシーオプションの設定"
-    },
-    "optionsSaveButton": {
-        "message": "保存",
-        "description": "設定を保存するボタン"
-    },
-    "optionsResetButton": {
-        "message": "初期設定に戻す",
-        "description": "設定をデフォルトにリセットするボタン"
-    },
-    "optionsWhitelist": {
-        "message": "サイトホワイトリスト",
-        "description": "プリフェッチが許可されているサイトのリスト"
-    },
-    "optionsBlacklist": {
-        "message": "サイトブラックリスト",
-        "description": "プリフェッチが無効になっているサイトのリスト"
-    }
+	"extensionName": {
+		"message": "PreCache Predictor",
+		"description": "拡張機能の名前"
+	},
+	"extensionDescription": {
+		"message": "機械学習を使用してユーザーの閲覧パターンを予測し、次のページを事前にキャッシュしてブラウジング速度を向上させます。",
+		"description": "拡張機能の説明"
+	},
+	"popupStatusActive": {
+		"message": "状態: アクティブ",
+		"description": "拡張機能がアクティブな時に表示される状態"
+	},
+	"popupStatusInactive": {
+		"message": "状態: 非アクティブ",
+		"description": "拡張機能が非アクティブな時に表示される状態"
+	},
+	"popupToggleOn": {
+		"message": "オン",
+		"description": "オン位置のトグルスイッチ"
+	},
+	"popupToggleOff": {
+		"message": "オフ",
+		"description": "オフ位置のトグルスイッチ"
+	},
+	"popupStatsHeader": {
+		"message": "全期間の統計:",
+		"description": "統計セクションのヘッダー"
+	},
+	"popupStatsTotalTime": {
+		"message": "総節約時間: $TIME$",
+		"description": "プリフェッチによって節約された総時間",
+		"placeholders": {
+			"TIME": {
+				"content": "$1",
+				"example": "35分42秒"
+			}
+		}
+	},
+	"popupStatsPrefetchedPages": {
+		"message": "プリフェッチページ: $COUNT$",
+		"description": "プリフェッチされたページ数",
+		"placeholders": {
+			"COUNT": {
+				"content": "$1",
+				"example": "412"
+			}
+		}
+	},
+	"popupStatsHitRate": {
+		"message": "ヒット率: $RATE$%",
+		"description": "成功したプリフェッチの割合",
+		"placeholders": {
+			"RATE": {
+				"content": "$1",
+				"example": "73"
+			}
+		}
+	},
+	"popupSettingsButton": {
+		"message": "詳細設定",
+		"description": "設定ページを開くボタン"
+	},
+	"optionsTitle": {
+		"message": "PreCache Predictor 設定",
+		"description": "オプションページのタイトル"
+	},
+	"optionsPrefetchLevel": {
+		"message": "プリフェッチの積極性",
+		"description": "プリフェッチの積極性レベルの設定"
+	},
+	"optionsLevelLow": {
+		"message": "低",
+		"description": "プリフェッチの積極性の低レベル"
+	},
+	"optionsLevelMedium": {
+		"message": "中",
+		"description": "プリフェッチの積極性の中レベル"
+	},
+	"optionsLevelHigh": {
+		"message": "高",
+		"description": "プリフェッチの積極性の高レベル"
+	},
+	"optionsBatteryMode": {
+		"message": "バッテリー節約モード",
+		"description": "バッテリー駆動時の動作設定"
+	},
+	"optionsDataSaver": {
+		"message": "データセーバーモード",
+		"description": "データ使用量を削減する設定"
+	},
+	"optionsPrivacy": {
+		"message": "プライバシー設定",
+		"description": "プライバシーオプションの設定"
+	},
+	"optionsSaveButton": {
+		"message": "保存",
+		"description": "設定を保存するボタン"
+	},
+	"optionsResetButton": {
+		"message": "初期設定に戻す",
+		"description": "設定をデフォルトにリセットするボタン"
+	},
+	"optionsWhitelist": {
+		"message": "サイトホワイトリスト",
+		"description": "プリフェッチが許可されているサイトのリスト"
+	},
+	"optionsBlacklist": {
+		"message": "サイトブラックリスト",
+		"description": "プリフェッチが無効になっているサイトのリスト"
+	},
+	"optionsDescription": {
+		"message": "PreCache Predictor の動作を設定して、ブラウジング体験を最適化します。",
+		"description": "設定ページの説明"
+	},
+	"optionsGeneral": {
+		"message": "一般設定",
+		"description": "一般設定のセクションのヘッダー"
+	},
+	"optionsPrefetchLevelDesc": {
+		"message": "ページをプリフェッチする積極性を決定します",
+		"description": "プリフェッチレベルの説明"
+	},
+	"optionsPrefetchLow": {
+		"message": "低",
+		"description": "プリフェッチレベル: 低"
+	},
+	"optionsPrefetchMedium": {
+		"message": "中",
+		"description": "プリフェッチレベル: 中"
+	},
+	"optionsPrefetchHigh": {
+		"message": "高",
+		"description": "プリフェッチレベル: 高"
+	},
+	"optionsBatterySaving": {
+		"message": "バッテリー節約モード",
+		"description": "バッテリー節約モードのラベル"
+	},
+	"optionsBatterySavingDesc": {
+		"message": "バッテリー残量が少ない場合（30％未満）は、プリフェッチを制限します",
+		"description": "バッテリー節約モードの説明"
+	},
+	"optionsDataSaverDesc": {
+		"message": "携帯電話ネットワークでのプリフェッチを制限します",
+		"description": "データセーバーモードの説明"
+	},
+	"optionsUrlFilters": {
+		"message": "URL フィルタ",
+		"description": "URLフィルタセクションのヘッダー"
+	},
+	"optionsWhitelistDesc": {
+		"message": "これらのドメインのページのみをプリフェッチします（すべてのドメインをプリフェッチする場合は空のままにしてください）",
+		"description": "ホワイトリストの説明"
+	},
+	"optionsBlacklistDesc": {
+		"message": "これらのドメインのページはプリフェッチしないでください",
+		"description": "ブラックリストの説明"
+	},
+	"optionsDomainsHint": {
+		"message": "カンマで区切られたドメイン名を入力してください",
+		"description": "ドメイン名のヒント"
+	},
+	"optionsStatistics": {
+		"message": "統計",
+		"description": "統計セクションのヘッダー"
+	},
+	"optionsStatsTotalTime": {
+		"message": "総節約時間",
+		"description": "総節約時間のラベル"
+	},
+	"optionsStatsPrefetchedPages": {
+		"message": "プリフェッチされたページ数",
+		"description": "プリフェッチされたページ数のラベル"
+	},
+	"optionsStatsSuccessfulPrefetches": {
+		"message": "成功したプリフェッチ数",
+		"description": "成功したプリフェッチ数のラベル"
+	},
+	"optionsStatsHitRate": {
+		"message": "成功率",
+		"description": "成功率のラベル"
+	},
+	"optionsResetStats": {
+		"message": "統計をリセット",
+		"description": "統計をリセットするボタンのラベル"
+	},
+	"optionsAdvanced": {
+		"message": "高度な設定",
+		"description": "高度な設定セクションのヘッダー"
+	},
+	"optionsDataExport": {
+		"message": "データ管理",
+		"description": "データ管理のラベル"
+	},
+	"optionsDataExportDesc": {
+		"message": "設定とデータをエクスポートまたはインポートします",
+		"description": "データ管理の説明"
+	},
+	"optionsExportData": {
+		"message": "データをエクスポート",
+		"description": "データをエクスポートするボタンのラベル"
+	},
+	"optionsImportData": {
+		"message": "データをインポート",
+		"description": "データをインポートするボタンのラベル"
+	},
+	"optionsResetAll": {
+		"message": "すべてリセット",
+		"description": "すべてリセットのラベル"
+	},
+	"optionsResetAllDesc": {
+		"message": "すべての設定とデータをデフォルト値にリセットします",
+		"description": "すべてリセットの説明"
+	},
+	"optionsResetAllButton": {
+		"message": "すべてリセット",
+		"description": "すべてリセットボタンのラベル"
+	},
+	"optionsSave": {
+		"message": "設定を保存",
+		"description": "設定を保存するボタンのラベル"
+	}
 }
