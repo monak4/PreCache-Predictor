@@ -48,21 +48,22 @@ async function loadPreferences() {
 }
 
 async function loadStatistics() {
-	console.log("読み込んでいます。。。");
 	try {
 		const stats = await browserAPI.storage.local.get({
-			totalTimeSaved: 0, // ミリ秒単位
-			prefetchedPages: 0, // ページ数
-			successfulPrefetches: 0, // 成功数
+			stats: {
+				totalTimeSaved: 0,
+				prefetchedPages: 0,
+				successfulPrefetches: 0,
+			},
 		});
 
-		const totalTimeFormatted = formatTime(stats.totalTimeSaved);
+		const totalTimeFormatted = formatTime(stats.stats.totalTimeSaved);
 
-		// ヒット率の計算
 		const hitRate =
-			stats.prefetchedPages > 0
+			stats.stats.prefetchedPages > 0
 				? Math.round(
-						(stats.successfulPrefetches / stats.prefetchedPages) *
+						(stats.stats.successfulPrefetches /
+							stats.stats.prefetchedPages) *
 							100
 				  )
 				: 0;
@@ -75,7 +76,7 @@ async function loadStatistics() {
 
 		document.getElementById("prefetched-pages").textContent =
 			browserAPI.i18n.getMessage("popupStatsPrefetchedPages", [
-				stats.prefetchedPages.toString(),
+				stats.stats.prefetchedPages.toString(),
 			]);
 
 		document.getElementById("hit-rate").textContent =
