@@ -49,7 +49,6 @@ function initializePageAnalysis() {
 	// DOM変更監視の設定
 	setupDomObserver();
 
-	// イベントリスナーの設定
 	setupEventListeners();
 
 	// 定期的な分析と報告
@@ -877,5 +876,4 @@ setTimeout(sendPageContextToBackground, 2000);
 setTimeout(analyzePageContext, 2500);
 setTimeout(setupVisibilityObserver, 3000);
 
-// コンソールメッセージ
 console.log("PreCache Predictor - Content Script が初期化されました");
