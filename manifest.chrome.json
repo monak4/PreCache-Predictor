@@ -1,0 +1,44 @@
+{
+	"manifest_version": 3,
+	"name": "PreCache Predictor",
+	"version": "0.2.5",
+	"description": "機械学習を使用してユーザーの閲覧パターンを予測し、次のページを事前にキャッシュしてブラウジング速度を向上させます。",
+	"default_locale": "ja",
+
+	"icons": {
+		"48": "icons/icon48.png",
+		"96": "icons/icon96.png",
+		"128": "icons/icon128.png"
+	},
+	"action": {
+		"default_popup": "popup/popup.html",
+		"default_icon": {
+			"48": "icons/icon48.png",
+			"96": "icons/icon96.png"
+		},
+		"default_title": "PreCache Predictor"
+	},
+	"permissions": [
+		"storage",
+		"history",
+		"tabs",
+		"webNavigation",
+		"webRequest"
+	],
+	"host_permissions": ["<all_urls>"],
+	"background": {
+		"service_worker": "background/background.js",
+		"type": "module"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content/predictor.js"],
+			"run_at": "document_idle"
+		}
+	],
+	"options_ui": {
+		"page": "options/options.html",
+		"open_in_tab": true
+	}
+}
